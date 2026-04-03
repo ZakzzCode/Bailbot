@@ -1,16 +1,16 @@
 {
-    "name": "qwerty-xcv/Baileys",
-    "version": "2.1.7",
-    "description": "WhatsApp Modified By 7eppeli",
+    "name": "PrasszTzy66/Bail",
+    "version": "1.0.0",
+    "description": "WhatsApp Baileys",
     "keywords": [
         "whatsapp-baileys"
     ],
-    "homepage": "https://github.com/qwerty-xcv/Baileys",
+    "homepage": "https://github.com/PrasszTzy66/Bail",
     "repository": {
-        "url": "https://github.com/qwerty-xcv/Baileys"
+        "url": "https://github.com/PrasszTzy66/Bail"
     },
     "license": "MIT",
-    "author": "7eppeli.pdf",
+    "author": "PrasszTzy",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "files": [
