@@ -24,14 +24,14 @@ Fokus utama: *stabil, ringan, cepat, dan siap pakai untuk 2025.*
 ```json
 {
   "dependencies": {
-    "baileys": "github:Zakzz-Code/Bailbot"
+    "baileys": "github:ZakzzCode/Bailbot"
   }
 }
 ```
 ## Connecting
 
 ``` ts
-import makeWASocket, { DisconnectReason } from '@Zakzz-Code/Bailbot'
+import makeWASocket, { DisconnectReason } from '@ZakzzCode/Bailbot'
 import { Boom } from '@hapi/boom'
 
 async function connectToWhatsApp () {
