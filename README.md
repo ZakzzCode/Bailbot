@@ -1,116 +1,72 @@
-# Modified Whatsapp-API
-<p align='center'>
-  <img src="https://files.catbox.moe/rhm9rt.webp" width="172">
-</p>
+# Baileys-Zakzz — WhatsApp Bot Framework 2026 Edition
 
---- 
+![Baileys Zakzz Logo](https://img1.pixhost.to/images/9606/654011461_alwayszakzz.jpg)
 
-## Usage
+[![Stars](https://img.shields.io/github/stars/ZakzzBotz/Bails?style=for-the-badge)](https://github.com/ZakzzBotz/Bails)
+[![Version](https://img.shields.io/npm/v/baileys-zakzz?style=for-the-badge)](https://www.npmjs.com/package/baileys-zakzz)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](#license)
+
+**Baileys-Zakzz** adalah versi modern dari [WhiskeySockets/Baileys](https://github.com/WhiskeySockets/Baileys), dirancang untuk pengembang bot WhatsApp yang membutuhkan kestabilan tinggi, struktur modular, dan kemampuan pengelolaan sesi otomatis.  
+Fokus utama: *stabil, ringan, cepat, dan siap pakai untuk 2025.*
+
+## Fitur Utama
+
+- Pairing code cepat & fleksibel  
+- Auto reconnect & session recovery otomatis  
+- Kompatibel dengan WhatsApp Business  
+- Struktur modular siap pakai untuk bot apa pun  
+- Mendukung multi-device terbaru  
+- Optimasi performa untuk VPS & cloud  
+- Build system JavaScript yang bersih dan efisien  
+
+## Instalasi
+
 ```json
-"depencies": {
-  "@whiskeysockets/baileys": "github:qwerty-xcv/Baileys"
+{
+  "dependencies": {
+    "baileys": "github:Zakzz-Code/Bailbot"
+  }
 }
 ```
-## Import
-```javascript
-const {
-  default:makeWASocket,
-  // Other Options 
-} = require('@whiskeysockets/baileys');
-```
+## Connecting
 
----
-# How To Connect To Whatsapp
-## With QR Code
-```javascript
-const {
-  default: makeWASocket
-} = require('@whiskeysockets/baileys');
+``` ts
+import makeWASocket, { DisconnectReason } from '@Zakzz-Code/Bailbot'
+import { Boom } from '@hapi/boom'
 
-const client = makeWASocket({
-  browser: ['Ubuntu', 'Chrome', '20.00.1'],
-  printQRInTerminal: true
-})
-```
+async function connectToWhatsApp () {
+    const sock = makeWASocket({
+        // can provide additional config here
+        printQRInTerminal: true
+    })
+    sock.ev.on('connection.update', (update) => {
+        const { connection, lastDisconnect } = update
+        if(connection === 'close') {
+            const shouldReconnect = (lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut
+            console.log('connection closed due to ', lastDisconnect.error, ', reconnecting ', shouldReconnect)
+            // reconnect if not logged out
+            if(shouldReconnect) {
+                connectToWhatsApp()
+            }
+        } else if(connection === 'open') {
+            console.log('opened connection')
+        }
+    })
+    sock.ev.on('messages.upsert', m => {
+        console.log(JSON.stringify(m, undefined, 2))
 
-## Connect With Number
-```javascript
-const {
-  default: makeWASocket,
-  fetchLatestWAWebVersion
-} = require('@whiskeysockets/baileys');
+        console.log('replying to', m.messages[0].key.remoteJid)
+        await sock.sendMessage(m.messages[0].key.remoteJid!, { text: 'Hello there!' })
+    })
+}
+connectToWhatsApp()
+``` 
 
-const client = makeWASocket({
-  browser: ['Ubuntu', 'Chrome', '20.00.1'],
-  printQRInTerminal: false,
-  version: fetchLatestWAWebVersion()
-  // Other options
-});
+## Thanks To All Developer
 
-const number = "628XXXXX";
-const code = await client.requestPairingCode(number.trim) /* Use : (number, "YYYYYYYY") for custom-pairing */
+WhatsApp: [wa.me/6282315314215](https://wa.me/62885693453463)  
+Telegram: [t.me/AlwaysZakzz](https://t.me/AlwaysZakzz)  
+WhiskeySockets: [WhiskeySockets/Baileys](https://github.com/WhiskeySockets/Baileys)  
+Node.js: [nodejs.org](https://nodejs.org)  
 
-console.log("Ur pairing code : " + code)
-```
-
-# Sending messages
-
-## send orderMessage
-```javascript
-const fs = require('fs');
-const ZeppImg = fs.readFileSync('./ZeppImage');
-
-await client.sendMessage(m.chat, {
-  thumbnail: ZeppImg,
-  message: "Gotta get a grip",
-  orderTitle: "7eppeli-Corporation",
-  totalAmount1000: 72502,
-  totalCurrencyCode: "IDR"
-}, { quoted:m })
-```
-
-## send pollResultSnapshotMessage
-```javascript
-await client.sendMessage(m.chat, {
-  pollResultMessage: {
-    name: "7eppeli-Corporation",
-    options: [
-      {
-        optionName: "poll 1"
-      },
-      {
-        optionName: "poll 2"
-      }
-    ],
-    newsletter: {
-      newsletterName: "7eppeli | Killer Queen Information",
-      newsletterJid: "1@newsletter"
-    }
-  }
-})
-```
-
-## send productMessage
-```javascript
-await client.relayMessage(m.chat, {
-  productMessage {
-    title: "7eppeli.pdf",
-    description: "zZZ...",
-    thumbnail: { url: "./ZeppImage" },
-    productId: "EXAMPLE_TOKEN",
-    retailerId: "EXAMPLE_RETAILER_ID",
-    url: "https://t.me/YuukeyD7eppeli",
-    body: "Nak Tido",
-    footer: "Footer",
-    buttons: [
-      {
-        name: "cta_url",
-        buttonParamsJson: "{\"display_text\":\"7eppeli-Pdf\",\"url\":\"https://t.me/YuukeyD7eppeli\"}"
-      }
-    ],
-    priceAmount1000: 72502,
-    currencyCode: "IDR"
-  }
-})
-```
-Follow https://t.me/TenkaWaBails kalau mau liat type message yg lain :v
+© 2026 AlwaysZakzz — All rights reserved.ge yg lain :v
